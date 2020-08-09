@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.project.demo.model.BachelorStudent;
+import com.project.demo.model.Courses;
 @Repository
 public interface BachelorStudentRepo extends JpaRepository<BachelorStudent,Integer> {
 	//Select based on name
@@ -24,7 +25,10 @@ public interface BachelorStudentRepo extends JpaRepository<BachelorStudent,Integ
 	public Page<BachelorStudent> findByName(String name, Pageable pageable);
 	
 	//Paging get all
-	@Query(value = "select * from BachelorStudent b", nativeQuery = true)
+	@Query(value = "select * from bachelor_student b", nativeQuery = true)
 	public Page<BachelorStudent> findAll(Pageable pageable);
 
+	//Select courses based on name
+	@Query(value = "select c from Courses c where c.name = ?1")
+	public List<Courses> getCoursesByName(String name);
 }

@@ -29,8 +29,8 @@ public class DepartmentController {
 		return departmentServiceBean.getDepartments();
 	}
 	
-	@GetMapping(value = "/listPageable/{page}")
-	public Page<Department> departmentPageable(@RequestBody String name, @PathVariable(value = "page")int page) {
+	@GetMapping(value = "/listPageable/{name}/{page}")
+	public Page<Department> departmentPageable(@PathVariable(value = "name")String name, @PathVariable(value = "page")int page) {
 		return departmentServiceBean.get(name, PageRequest.of(page, 2, Direction.ASC, "id"));
 	}
 	
@@ -44,18 +44,18 @@ public class DepartmentController {
 		return departmentServiceBean.get(id);
 	}
 	
-	@GetMapping(value = "/get/name")
-	public List<Department> findByName(@RequestBody String name){
+	@GetMapping(value = "/get/name/{name}")
+	public List<Department> findByName(@PathVariable(value = "name")String name){
 		return departmentServiceBean.get(name);
 	}
 	
-	@GetMapping(value = "/get/name/desc")
-	public List<Department> findByNameDesc(@RequestBody String name){
+	@GetMapping(value = "/get/desc/{name}")
+	public List<Department> findByNameDesc(@PathVariable(value = "name")String name){
 		return departmentServiceBean.getDesc(name);
 	}
 	
-	@DeleteMapping(value="/delete")
-    public String delete(@RequestBody int id) {
+	@DeleteMapping(value="/delete/{id}")
+    public String delete(@PathVariable(value = "id")int id) {
 		return departmentServiceBean.delete(id);
     }
 	
@@ -67,5 +67,10 @@ public class DepartmentController {
 	@PutMapping(value="/update")
 	public String update(@RequestBody Department department) {
 		return departmentServiceBean.update(department);
+	}
+	
+	@DeleteMapping(value="/deleteAll")
+	public String deleteAll() {
+		return departmentServiceBean.deleteAll();
 	}
 }

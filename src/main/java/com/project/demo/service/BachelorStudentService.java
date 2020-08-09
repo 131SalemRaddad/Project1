@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.project.demo.model.BachelorStudent;
+import com.project.demo.model.Courses;
 
 public interface BachelorStudentService {
 	//get all bachelor students
@@ -47,4 +48,7 @@ public interface BachelorStudentService {
 	
 	//delete all bachelor students
 	public String deleteAll();
+	
+	//get all courses based on name
+	public List<Courses> getCoursesByName(String name);
 }

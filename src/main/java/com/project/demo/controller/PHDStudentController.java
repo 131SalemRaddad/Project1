@@ -29,8 +29,8 @@ public class PHDStudentController {
 		return pHDStudentServiceBean.getPHDStudents();
 	}
 	
-	@GetMapping(value = "/listPageable/{page}")
-	public Page<PHDStudent> phdStudentPageable(@RequestBody String name, @PathVariable(value = "page")int page) {
+	@GetMapping(value = "/listPageable/{name}/{page}")
+	public Page<PHDStudent> phdStudentPageable(@PathVariable(value = "name")String name, @PathVariable(value = "page")int page) {
 		return pHDStudentServiceBean.get(name, PageRequest.of(page, 2, Direction.ASC, "id"));
 	}
 	
@@ -39,28 +39,28 @@ public class PHDStudentController {
 		return pHDStudentServiceBean.getAll(PageRequest.of(page, size, Direction.ASC, "id"));
 	}
 	
-	@GetMapping(value = "/get/name")
-	public List<PHDStudent> findByName(@RequestBody String name){
+	@GetMapping(value = "/get/name/{name}")
+	public List<PHDStudent> findByName(@PathVariable(value = "name")String name){
 		return pHDStudentServiceBean.get(name);
 	}
 	
-	@GetMapping(value = "/get/name/desc")
-	public List<PHDStudent> findByNameDesc(@RequestBody String name){
+	@GetMapping(value = "/get/desc/{name}")
+	public List<PHDStudent> findByNameDesc(@PathVariable(value = "name")String name){
 		return pHDStudentServiceBean.getDesc(name);
 	}
 	
-	@GetMapping(value="/get")
-	public PHDStudent get(@RequestBody int id) {
+	@GetMapping(value="/get/{id}")
+	public PHDStudent get(@PathVariable(value = "id")int id) {
 		return pHDStudentServiceBean.get(id);
 	}
 	
-	@DeleteMapping(value="/delete")
-    public String delete(@RequestBody int id) {
+	@DeleteMapping(value="/delete/{id}")
+    public String delete(@PathVariable(value = "id")int id) {
 		return pHDStudentServiceBean.delete(id);
     }
 	
-	@DeleteMapping(value="/drop/course/{cId}")
-    public String delete(@RequestBody int id, @PathVariable(value = "id")int cId) {
+	@DeleteMapping(value="/drop/course/{id}/{cId}")
+    public String delete(@PathVariable(value = "id")int id, @PathVariable(value = "id")int cId) {
 		return pHDStudentServiceBean.drop(id, cId);
     }
 	

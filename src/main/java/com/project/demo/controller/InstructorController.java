@@ -29,8 +29,8 @@ public class InstructorController {
 		return instructorServiceBean.getInstructors();
 	}
 	
-	@GetMapping(value = "/listPageable/{page}")
-	public Page<Instructor> instructorPageable(@RequestBody String name, @PathVariable(value = "page")int page) {
+	@GetMapping(value = "/listPageable/{name}/{page}")
+	public Page<Instructor> instructorPageable(@PathVariable(value = "name")String name, @PathVariable(value = "page")int page) {
 		return instructorServiceBean.get(name, PageRequest.of(page, 2, Direction.ASC, "id"));
 	}
 	
@@ -39,27 +39,27 @@ public class InstructorController {
 		return instructorServiceBean.getAll(PageRequest.of(page, size, Direction.ASC, "id"));
 	}
 	
-	@GetMapping(value="/get")
-	public Instructor get(@RequestBody int id) {
+	@GetMapping(value="/get/{id}")
+	public Instructor get(@PathVariable(value = "id")int id) {
 		return instructorServiceBean.get(id);
 	}
 	
-	@GetMapping(value = "/get/name")
-	public List<Instructor> findByName(@RequestBody String name){
+	@GetMapping(value = "/get/name/{name}")
+	public List<Instructor> findByName(@PathVariable(value = "name") String name){
 		return instructorServiceBean.get(name);
 	}
 	
-	@GetMapping(value = "/get/name/desc")
-	public List<Instructor> findByNameDesc(@RequestBody String name){
+	@GetMapping(value = "/get/desc/{name}")
+	public List<Instructor> findByNameDesc(@PathVariable(value = "name")String name){
 		return instructorServiceBean.getDesc(name);
 	}
 	
-	@DeleteMapping(value="/delete")
-    public String delete(@RequestBody int id) {
+	@DeleteMapping(value="/delete/{id}")
+    public String delete(@PathVariable(value = "id")int id) {
 		return instructorServiceBean.delete(id);
     }
 	
-	@PostMapping(value="/add/address/{aid}/department/{did}")
+	@PostMapping(value="/add/{aid}/{did}")
 	public String add(@RequestBody Instructor instructor, @PathVariable(value = "aid")int aId, @PathVariable(value = "did")int dId) {
 		return instructorServiceBean.save(instructor, aId, dId);
 	}
@@ -67,5 +67,10 @@ public class InstructorController {
 	@PutMapping(value="/update")
 	public String update(@RequestBody Instructor instructor) {
 		return instructorServiceBean.update(instructor);
+	}
+	
+	@DeleteMapping(value="/deleteAll")
+	public String deleteAll() {
+		return instructorServiceBean.deleteAll();
 	}
 }

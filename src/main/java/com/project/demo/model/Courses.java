@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,13 +13,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-@DynamicUpdate
 @Entity
 @Component
 @Table
@@ -32,27 +31,30 @@ public class Courses {
 	private String name;
 //	private String department;
 	private int hours;
-
+	
+//	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@JsonIgnore
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "courses", cascade = CascadeType.PERSIST)
-	@Column(updatable = false)
 	private List<BachelorStudent> bachelorStudents = new ArrayList<>();
 
+//	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@JsonIgnore
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "courses")
-	@Column(updatable = false)
 	private List<MasterStudent> masterStudents = new ArrayList<>();
 
+//	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@JsonIgnore
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "courses")
-	@Column(updatable = false)
 	private List<PHDStudent> phdStudents = new ArrayList<>();
 
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity=Instructor.class, cascade = CascadeType.PERSIST)
     @JoinColumn(name="ci_fk")
-//	@Column(updatable = false)
 	private Instructor instructor;
 
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity=Instructor.class, cascade = CascadeType.PERSIST)
     @JoinColumn(name="cd_fk")
-//	@Column(updatable = false)
 	private Department department;
 	
 	public int getId() {

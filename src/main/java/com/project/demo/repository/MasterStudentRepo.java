@@ -25,6 +25,6 @@ public interface MasterStudentRepo extends JpaRepository<MasterStudent, Integer>
 	public Page<MasterStudent> findByName(String name, Pageable pageable);
 	
 	//Paging get all
-	@Query(value = "select * from MasterStudent m", nativeQuery = true)
+	@Query(value = "select * from master_student m", nativeQuery = true)
 	public Page<MasterStudent> findAll(Pageable pageable);
 }

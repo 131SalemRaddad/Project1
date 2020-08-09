@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.demo.model.BachelorStudent;
+import com.project.demo.model.Courses;
 import com.project.demo.service.BachelorStudentServiceImpl;
 
 @RestController
@@ -30,8 +31,8 @@ public class BachelorStudentController {
 		return bachelorStudentServiceBean.getBachelorStudents();
 	}
 	
-	@GetMapping(value = "/listPageable/{page}")
-	public Page<BachelorStudent> bachelorStudentPageable(@RequestBody String name, @PathVariable(value = "page")int page) {
+	@GetMapping(value = "/listPageable/{name}/{page}")
+	public Page<BachelorStudent> bachelorStudentPageable(@PathVariable(value = "name")String name, @PathVariable(value = "page")int page) {
 		return bachelorStudentServiceBean.get(name, PageRequest.of(page, 2, Direction.ASC, "id"));
 	}
 	
@@ -40,28 +41,29 @@ public class BachelorStudentController {
 		return bachelorStudentServiceBean.getAll(PageRequest.of(page, size, Direction.ASC, "id"));
 	}
 	
-	@GetMapping(value = "/get/name")
-	public List<BachelorStudent> findByName(@RequestBody String name){
+	@GetMapping(value = "/get/name/{name}")
+	public List<BachelorStudent> findByName(@PathVariable(value = "name")String name){
 		return bachelorStudentServiceBean.get(name);
 	}
 	
-	@GetMapping(value = "/get/name/desc")
-	public List<BachelorStudent> findByNameDesc(@RequestBody String name){
+	@GetMapping(value = "/get/desc/{name}")
+	public List<BachelorStudent> findByNameDesc(@PathVariable(value = "name") String name){
 		return bachelorStudentServiceBean.getDesc(name);
 	}
 	
-	@GetMapping(value="/get")
-	public BachelorStudent get(@RequestBody int id) {
-		return bachelorStudentServiceBean.get(id);
+	@GetMapping(value="/get/{id}")
+	public BachelorStudent get(@PathVariable(value = "id")int id) {
+		BachelorStudent s = bachelorStudentServiceBean.get(id);
+		return s;
 	}
 	
-	@DeleteMapping(value="/delete")
-    public String delete(@RequestBody int id) {
+	@DeleteMapping(value="/delete/{id}")
+    public String delete(@PathVariable(value = "id")int id) {
 		return bachelorStudentServiceBean.delete(id);
     }
 	
-	@DeleteMapping(value="/drop/course/{cId}")
-    public String delete(@RequestBody int id, @PathVariable(value = "id")int cId) {
+	@DeleteMapping(value="/drop/course/{id}/{cId}")
+    public String delete(@PathVariable(value = "id")int id, @PathVariable(value = "id")int cId) {
 		return bachelorStudentServiceBean.drop(id, cId);
     }
 	
@@ -88,5 +90,10 @@ public class BachelorStudentController {
 	@DeleteMapping(value="/deleteAll")
 	public String deleteAll() {
 		return bachelorStudentServiceBean.deleteAll();
+	}
+	
+	@GetMapping(value = "/{cName}")
+	public List<Courses> getCoursesByName(@PathVariable(value = "cName")String cName){
+		return bachelorStudentServiceBean.getCoursesByName(cName);
 	}
 }

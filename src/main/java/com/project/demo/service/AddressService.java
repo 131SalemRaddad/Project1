@@ -36,6 +36,6 @@ public interface AddressService {
 	//delete an address
 	public String delete(int id);
 	
-	//delete all addresses
-//	public String deleteAll();
+//	delete all addresses
+	public String deleteAll();
 }

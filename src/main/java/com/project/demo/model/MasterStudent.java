@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,13 +14,12 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-@DynamicUpdate
 @Entity
 @Component
 @Table
@@ -33,21 +31,21 @@ public class MasterStudent {
 	private String name;
 	private double tawjihiGPA;
 	private double bachelorGPA;
-	private String city;
+//	private String city;
 	private String college;
 	private int startYear;
 
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity=Address.class, cascade = CascadeType.PERSIST)
     @JoinColumn(name="ma_fk")
-//	@Column(updatable = false)
 	private Address address;
 
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
 	  name = "course_master", 
 	  joinColumns = @JoinColumn(name = "masterStudent_id"), 
 	  inverseJoinColumns = @JoinColumn(name = "course_id"))
-	@Column(updatable = false)
 	private List<Courses> courses = new ArrayList<>();
 	
 	public int getId() {
@@ -74,12 +72,12 @@ public class MasterStudent {
 	public void setBachelorGPA(double bachelorGPA) {
 		this.bachelorGPA = bachelorGPA;
 	}
-	public String getCity() {
-		return city;
-	}
-	public void setCity(String city) {
-		this.city = city;
-	}
+//	public String getCity() {
+//		return city;
+//	}
+//	public void setCity(String city) {
+//		this.city = city;
+//	}
 	public String getCollege() {
 		return college;
 	}
@@ -107,6 +105,6 @@ public class MasterStudent {
 	@Override
 	public String toString() {
 		return "MasterStudent [id=" + id + ", name=" + name + ", tawjihiGPA=" + tawjihiGPA + ", bachelorGPA="
-				+ bachelorGPA + ", city=" + city + ", college=" + college + ", startYear=" + startYear + "]\n";
+				+ bachelorGPA + ", college=" + college + ", startYear=" + startYear + "]\n";
 	}
 }

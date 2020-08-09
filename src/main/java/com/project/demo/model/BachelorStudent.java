@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,10 +14,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.JoinColumn;
 
-import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
@@ -31,14 +30,17 @@ public class BachelorStudent {
 	private int id;
 	private String name;
 	private double tawjihiGPA;
-	private String city;
+//	private String city;
 	private String college;
 	private int startYear;
 	
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity=Address.class, cascade = CascadeType.PERSIST)
     @JoinColumn(name="ba_fk")
 	private Address address;
 	
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
 	  name = "course_in", joinColumns = @JoinColumn(name = "bachelorStudent_id"),
@@ -69,12 +71,12 @@ public class BachelorStudent {
 	public void setTawjihiGPA(double tawjihiGPA) {
 		this.tawjihiGPA = tawjihiGPA;
 	}
-	public String getCity() {
-		return city;
-	}
-	public void setCity(String city) {
-		this.city = city;
-	}
+//	public String getCity() {
+//		return city;
+//	}
+//	public void setCity(String city) {
+//		this.city = city;
+//	}
 	public String getCollege() {
 		return college;
 	}
@@ -95,7 +97,7 @@ public class BachelorStudent {
 	}
 	@Override
 	public String toString() {
-		return "BachelorStudent [id=" + id + ", name=" + name + ", tawjihiGPA=" + tawjihiGPA + ", city=" + city
+		return "BachelorStudent [id=" + id + ", name=" + name + ", tawjihiGPA=" + tawjihiGPA
 				+ ", college=" + college + ", startYear=" + startYear + ", address=" + address + "]";
 	}
 }

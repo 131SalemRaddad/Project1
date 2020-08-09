@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,13 +13,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-@DynamicUpdate
 @Entity
 @Component
 @Table
@@ -34,19 +32,19 @@ public class Instructor {
 	private String gradeLevel;
 	private String collegeName;
 
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity=Address.class, cascade = CascadeType.PERSIST)
     @JoinColumn(name="ia_fk")
-//	@Column(updatable = false)
 	private Address address;
 
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity=Department.class, cascade = CascadeType.PERSIST)
     @JoinColumn(name="id_fk")
-//	@Column(updatable = false)
 	private Department department;
 
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@OneToMany(fetch = FetchType.LAZY, targetEntity = Courses.class, cascade = CascadeType.PERSIST, orphanRemoval = true)
 	@JoinColumn(name = "ic_fk", referencedColumnName = "id")
-	@Column(updatable = false)
 	private List<Courses> courses = new ArrayList<>();
 	
 	public int getId() {

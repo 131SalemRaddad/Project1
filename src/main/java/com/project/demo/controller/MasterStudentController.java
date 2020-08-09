@@ -29,8 +29,8 @@ public class MasterStudentController {
 		return masterStudentServiceBean.getMasterStudents();
 	}
 	
-	@GetMapping(value = "/listPageable/{page}")
-	public Page<MasterStudent> masterStudentPageable(@RequestBody String name, @PathVariable(value = "page")int page) {
+	@GetMapping(value = "/listPageable/{name}/{page}")
+	public Page<MasterStudent> masterStudentPageable(@PathVariable(value = "name")String name, @PathVariable(value = "page")int page) {
 		return masterStudentServiceBean.get(name, PageRequest.of(page, 2, Direction.ASC, "id"));
 	}
 	
@@ -39,28 +39,28 @@ public class MasterStudentController {
 		return masterStudentServiceBean.getAll(PageRequest.of(page, size, Direction.ASC, "id"));
 	}
 	
-	@GetMapping(value = "/get/name")
-	public List<MasterStudent> findByName(@RequestBody String name){
+	@GetMapping(value = "/get/name/{name}")
+	public List<MasterStudent> findByName(@PathVariable(value = "name")String name){
 		return masterStudentServiceBean.get(name);
 	}
 	
-	@GetMapping(value = "/get/name/desc")
-	public List<MasterStudent> findByNameDesc(@RequestBody String name){
+	@GetMapping(value = "/get/desc/{name}")
+	public List<MasterStudent> findByNameDesc(@PathVariable(value = "name")String name){
 		return masterStudentServiceBean.getDesc(name);
 	}
 	
-	@GetMapping(value="/get")
-	public MasterStudent get(@RequestBody int id) {
+	@GetMapping(value="/get/{id}")
+	public MasterStudent get(@PathVariable(value = "id")int id) {
 		return masterStudentServiceBean.get(id);
 	}
 	
-	@DeleteMapping(value="/delete")
-    public String delete(@RequestBody int id) {
+	@DeleteMapping(value="/delete/{id}")
+    public String delete(@PathVariable(value = "id")int id) {
 		return masterStudentServiceBean.delete(id);
     }
 	
-	@DeleteMapping(value="/drop/course/{cId}")
-    public String delete(@RequestBody int id, @PathVariable(value = "id")int cId) {
+	@DeleteMapping(value="/drop/course/{id}/{cId}")
+    public String delete(@PathVariable(value = "id")int id, @PathVariable(value = "id")int cId) {
 		return masterStudentServiceBean.drop(id, cId);
     }
 	

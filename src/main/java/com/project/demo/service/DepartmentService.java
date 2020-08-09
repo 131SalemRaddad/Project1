@@ -35,4 +35,7 @@ public interface DepartmentService {
 	
 	//delete a department
 	public String delete(int id);
+	
+//	delete all departments
+	public String deleteAll();
 }

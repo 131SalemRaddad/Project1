@@ -35,4 +35,7 @@ public interface InstructorService {
 	
 	//delete an instructor
 	public String delete(int id);
+	
+//	delete all instructors
+	public String deleteAll();
 }

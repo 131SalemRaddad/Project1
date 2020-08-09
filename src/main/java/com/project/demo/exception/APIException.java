@@ -21,6 +21,9 @@ public class APIException extends RuntimeException {
 	public ExceptionResponse getResponse() {
 		return response;
 	}
+	public String getMessage() {
+		return response.getMessage();
+	}
 	public HttpStatus getStatus() {
 		return response.getError();
 	}

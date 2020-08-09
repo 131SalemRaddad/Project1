@@ -29,9 +29,9 @@ public class CoursesController {
 		return coursesServiceBean.getCourses();
 	}
 	
-	@GetMapping(value = "/listPageable/{page}")
-	public Page<Courses> coursePageable(@RequestBody String name, @PathVariable(value = "page")int page) {
-		return coursesServiceBean.get(name, PageRequest.of(page, 2, Direction.ASC, "id"));
+	@GetMapping(value = "/listPageable/{name}/{page}")
+	public Page<Courses> coursePageable(@PathVariable(value = "name")String name, @PathVariable(value = "page")int page) {
+		return coursesServiceBean.getCoursesByName(name, PageRequest.of(page, 2, Direction.ASC, "id"));
 	}
 	
 	@GetMapping(value = "/allPages/{size}/{page}")
@@ -39,27 +39,27 @@ public class CoursesController {
 		return coursesServiceBean.getAll(PageRequest.of(page, size, Direction.ASC, "id"));
 	}
 	
-	@GetMapping(value="/get")
-	public Courses get(@RequestBody int id) {
+	@GetMapping(value="/get/{id}")
+	public Courses get(@PathVariable(value = "id")int id) {
 		return coursesServiceBean.get(id);
 	}
 	
-	@GetMapping(value = "/get/name")
-	public List<Courses> findByName(@RequestBody String name){
+	@GetMapping(value = "/get/name/{name}")
+	public List<Courses> findByName(@PathVariable(value = "name") String name){
 		return coursesServiceBean.get(name);
 	}
 	
-	@GetMapping(value = "/get/name/desc")
-	public List<Courses> findByNameDesc(@RequestBody String name){
+	@GetMapping(value = "/get/desc/{name}")
+	public List<Courses> findByNameDesc(@PathVariable(value = "name") String name){
 		return coursesServiceBean.getDesc(name);
 	}
 	
-	@DeleteMapping(value="/delete")
-    public String delete(@RequestBody int id) {
+	@DeleteMapping(value="/delete/{id}")
+    public String delete(@PathVariable(value = "id")int id) {
 		return coursesServiceBean.delete(id);
     }
 	
-	@PostMapping(value="/add/instructor/{iId}/department/{dId}")
+	@PostMapping(value="/add/{iId}/{dId}")
 	public String add(@RequestBody Courses course, @PathVariable(value = "iId")int iId, @PathVariable(value = "dId")int dId) {
 		return coursesServiceBean.save(course, iId, dId);
 	}
@@ -67,5 +67,15 @@ public class CoursesController {
 	@PutMapping(value="/update")
 	public String update(@RequestBody Courses course) {
 		return coursesServiceBean.update(course);
+	}
+	
+	@DeleteMapping(value="/deleteAll")
+	public String deleteAll() {
+		return coursesServiceBean.deleteAll();
+	}
+	
+	@PostMapping(value = "/addRaw")
+	public String addRawCourse(@RequestBody Courses course) {
+		return coursesServiceBean.addRawCourse(course);
 	}
 }

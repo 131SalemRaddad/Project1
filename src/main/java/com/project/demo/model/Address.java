@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,10 +12,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
@@ -29,18 +28,26 @@ public class Address {
 	private int id;
 	private String name;
 	 
+//	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, targetEntity = BachelorStudent.class, cascade = CascadeType.PERSIST, orphanRemoval = true)
 	@JoinColumn(name = "ab_fk", referencedColumnName = "id")
 	private List<BachelorStudent> bachelorStudents = new ArrayList<>();
 	
+//	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, targetEntity = MasterStudent.class, cascade = CascadeType.PERSIST, orphanRemoval = true)
 	@JoinColumn(name = "am_fk", referencedColumnName = "id")
 	private List<MasterStudent> masterStudents = new ArrayList<>();
 	
+//	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, targetEntity = PHDStudent.class, cascade = CascadeType.PERSIST, orphanRemoval = true)
 	@JoinColumn(name = "ap_fk", referencedColumnName = "id")
 	private List<PHDStudent> phdStudents = new ArrayList<>();
 	
+//	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, targetEntity = Instructor.class, cascade = CascadeType.PERSIST, orphanRemoval = true)
 	@JoinColumn(name = "ai_fk", referencedColumnName = "id")
 	private List<Instructor> instructors = new ArrayList<>();

@@ -29,8 +29,8 @@ public class AddressController {
 		return addressServiceBean.getAddresses();
 	}
 	
-	@GetMapping(value = "/listPageable/{page}")
-	public Page<Address> addressPageable(@RequestBody String name, @PathVariable(value = "page")int page) {
+	@GetMapping(value = "/listPageable/{name}/{page}")
+	public Page<Address> addressPageable(@PathVariable(value = "name")String name, @PathVariable(value = "page")int page) {
 		return addressServiceBean.get(name, PageRequest.of(page, 2, Direction.ASC, "id"));
 	}
 	
@@ -39,23 +39,23 @@ public class AddressController {
 		return addressServiceBean.getAll(PageRequest.of(page, size, Direction.ASC, "id"));
 	}
 	
-	@GetMapping(value="/get")
-	public Address get(@RequestBody int id) {
+	@GetMapping(value="/get/{id}")
+	public Address get(@PathVariable(value = "id")int id) {
 		return addressServiceBean.get(id);
 	}
 	
-	@GetMapping(value = "/get/name")
-	public List<Address> findByName(@RequestBody String name){
+	@GetMapping(value = "/get/name/{name}")
+	public List<Address> findByName(@PathVariable String name){
 		return addressServiceBean.get(name);
 	}
 	
-	@GetMapping(value = "/get/name/desc")
-	public List<Address> findByNameDesc(@RequestBody String name){
+	@GetMapping(value = "/get/desc/{name}")
+	public List<Address> findByNameDesc(@PathVariable(value = "name")String name){
 		return addressServiceBean.getDesc(name);
 	}
 	
-	@DeleteMapping(value="/delete")
-    public String delete(@RequestBody int id) {
+	@DeleteMapping(value="/delete/{id}")
+    public String delete(@PathVariable(value = "id")int id) {
 		return addressServiceBean.delete(id);
     }
 	
@@ -69,8 +69,8 @@ public class AddressController {
 		return addressServiceBean.update(address);
 	}
 	
-//	@DeleteMapping(value="/deleteAll")
-//	public String deleteAll() {
-//		return addressServiceBean.deleteAll();
-//	}
+	@DeleteMapping(value="/deleteAll")
+	public String deleteAll() {
+		return addressServiceBean.deleteAll();
+	}
 }

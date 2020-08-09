@@ -16,7 +16,7 @@ public interface CoursesService {
 	public Courses get(int id);
 	
 	//get course by name in pages
-	public Page<Courses> get(String name, Pageable pageable);
+	public Page<Courses> getCoursesByName(String name, Pageable pageable);
 	
 	//get all courses in pages
 	public List<Courses> getAll(Pageable pageable);
@@ -35,4 +35,10 @@ public interface CoursesService {
 	
 	//delete a course
 	public String delete(int id);
+	
+//	delete all courses
+	public String deleteAll();
+	
+	// add raw course
+	public String addRawCourse(Courses course);
 }
